@@ -591,7 +591,7 @@
             // Attach generateYearOptions to DOMContentLoaded for immediate execution
             document.addEventListener('DOMContentLoaded', generateYearOptions);
 
-            //code pour le calendrier 
+           // Code pour le calendrier
 
             function genererCalendrier(event) { 
                 event.preventDefault();
@@ -610,7 +610,7 @@
                 const yearSelect = document.getElementById('anneeSelect');
 
                 if (!yearSelect) {
-                    console.error("Élément select avec l'ID 'yearselec' introuvable.");
+                    console.error("Élément select avec l'ID 'anneeSelect' introuvable.");
                     return;
                 }
 
@@ -625,18 +625,28 @@
                 });
             }
 
-            function genererSem(event) {
-                event.preventDefault();
-                const lien = event.target.getAttribute("href");
-                document.querySelector("#calendrier-modal #form").setAttribute("action", lien);
-            }
+            // Fonction pour sélectionner l'année en cours lorsque le modal s'ouvre
+            function setCurrentYear() {
+                const yearSelect = document.getElementById('anneeSelect');
+                const currentYear = new Date().getFullYear();
 
+                if (yearSelect) {
+                    yearSelect.value = currentYear; // Sélectionner l'année en cours
+                }
+            }
 
             // Attacher l'événement pour exécuter la fonction lors du chargement du DOM
             document.addEventListener('DOMContentLoaded', () => {
                 anneeOptions();
             });
-            
+
+            // Attacher l'événement pour sélectionner l'année en cours à l'ouverture du modal
+            document.addEventListener('click', (event) => {
+                if (event.target.dataset.modalToggle === 'calendrier-modal') {
+                    setCurrentYear();
+                }
+            });
+
            
         </script>
     @endsection
